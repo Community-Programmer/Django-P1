@@ -18,7 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from employees.views import EmployeeViewSet, DepartmentViewSet, DepartmentStatsView, AttendanceStatsView, charts_view, home
+from employees.views import EmployeeViewSet, DepartmentViewSet, DepartmentStatsView, AttendanceStatsView, charts_view, welcome_view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework import permissions
 
@@ -40,7 +40,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('', home, name='home'),  
+    path('', welcome_view, name='welcome'),
     path('api/', include(router.urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api-auth/', include('rest_framework.urls')),

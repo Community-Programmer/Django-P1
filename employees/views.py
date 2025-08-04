@@ -101,5 +101,6 @@ def charts_view(request):
     }
     return render(request, 'charts.html', context)
 
-def home(request):
-    return HttpResponse("<h2>Welcome to the Employee Management System API</h2><p>Visit /swagger/ for API documentation.</p>")
+
+def welcome_view(request):
+    return render(request, 'welcome.html')
