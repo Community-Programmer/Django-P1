@@ -8,6 +8,7 @@ from .filters import EmployeeFilter
 from django.db.models import Count
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import HttpResponse
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
@@ -99,3 +100,6 @@ def charts_view(request):
         'attendance_data': attendance_data
     }
     return render(request, 'charts.html', context)
+
+def home(request):
+    return HttpResponse("<h2>Welcome to the Employee Management System API</h2><p>Visit /swagger/ for API documentation.</p>")
