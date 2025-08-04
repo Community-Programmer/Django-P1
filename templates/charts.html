@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Employee Analytics</h1>
+    
+    <div class="chart-container">
+        <h2>Employees per Department</h2>
+        <canvas id="deptChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Attendance Overview (Last 30 Days)</h2>
+        <canvas id="attendanceChart"></canvas>
+    </div>
+
+    <script>
+        // Department Pie Chart
+        const deptData = {{ dept_stats|safe }};
+        const deptLabels = deptData.map(item => item.name);
+        const deptValues = deptData.map(item => item.employee_count);
+        
+        new Chart(document.getElementById('deptChart'), {
+            type: 'pie',
+            data: {
+                labels: deptLabels,
+                datasets: [{
+                    data: deptValues,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
+                        '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
+                    ]
+                }]
+            }
+        });
+        
+        // Attendance Bar Chart
+        const attendData = {{ attendance_data|safe }};
+        const dates = attendData.map(item => item.date);
+        const present = attendData.map(item => item.present);
+        const absent = attendData.map(item => item.absent);
+        const late = attendData.map(item => item.late);
+        
+        new Chart(document.getElementById('attendanceChart'), {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'Present',
+                        data: present,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                    },
+                    {
+                        label: 'Absent',
+                        data: absent,
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    },
+                    {
+                        label: 'Late',
+                        data: late,
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
